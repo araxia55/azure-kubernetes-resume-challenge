@@ -1,0 +1,14 @@
+# Baseline official image for mariadb
+FROM mariadb:latest
+
+# Set environment variables
+ENV MARIADB_ROOT_PASSWORD=drowssap4321
+ENV DB_NAME=ecomdb
+ENV DB_USER=ecomdb-user
+ENV DB_PASSWORD=drowssap4321
+
+# Copy the sql files into the entrypoint dir to init the db
+COPY /assets/db-load-script.sql /docker-entrypoint-initdb.d/
+
+# Expose the db port
+EXPOSE 3306
