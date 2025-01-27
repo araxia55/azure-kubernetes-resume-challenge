@@ -17,10 +17,16 @@ spec:
         image: rm05/ecom-db:v1
         ports:
         - containerPort: 3306
-       resources: {}
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
         volumeMounts:
-        - name: mariadb-persistent-storage
-          mountPath: /var/lib/mysql
+          - name: mariadb-persistent-vol-storage
+            mountPath: /var/lib/mysql
       volumes:
       - name: mariadb-persistent-vol-storage
         persistentVolumeClaim:
