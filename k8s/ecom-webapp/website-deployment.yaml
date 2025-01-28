@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: ecomm-website-deployment
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: ecom-webapp
@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: ecom-webapp-container
-          image: rm05/ecom-web
+          image: rm05/ecom-web:v1
+          imagePullPolicy: Always
           resources:
             limits:
               memory: "120Mi"
@@ -42,6 +43,6 @@ spec:
                 key: DB_PASSWORD
           - name: DB_NAME
             valueFrom:
-              secretKeyRef:
+              configMapKeyRef:
                 name: website-configmap
                 key: DB_NAME

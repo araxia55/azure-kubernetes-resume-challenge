@@ -9,6 +9,6 @@ spec:
     app: ecom-webapp
   ports:
     - protocol: TCP
-      port: 3306
-      targetPort: 3306
+      port: 80
+      targetPort: 80
   type: LoadBalancer
