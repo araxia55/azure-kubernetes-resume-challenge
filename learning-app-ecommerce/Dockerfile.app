@@ -13,6 +13,6 @@ EXPOSE 80
 # Set environment variables for database connection
 ENV MYSQL_HOST=mysql-service
 ENV MYSQL_PORT=3306
-ENV MYSQL_DATABASE=database_name
-ENV MYSQL_USER=username
-ENV MYSQL_PASSWORD=password
+ENV MYSQL_DATABASE=ecomdb
+ENV MYSQL_USER=ecomdb-user
+ENV MYSQL_PASSWORD=drowssap4321
