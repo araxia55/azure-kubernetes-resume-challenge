@@ -1,6 +1,6 @@
 ## Azure Kubernetes Resume Challenge ##
 
-This is inspired by the (https://cloudresumechallenge.dev/docs/extensions/kubernetes-challenge/)
+This is inspired by the [**Kubernetes Resume Challenge**](https://cloudresumechallenge.dev/docs/extensions/kubernetes-challenge/).
 
 ## Setup ##
 Prerequisites
