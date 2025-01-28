@@ -10,9 +10,16 @@ Prerequisites
 - [Terraform](https://learn.microsoft.com/en-us/azure/developer/terraform/quickstart-configure)
 
 ## Getting Started ##
-1. [Install and configure Kubernetes using Terraform](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-terraform?pivots=development-environment-azure-cli)
-2. Create & Deploy K8s Manifests
+1. Setup Azure storage as the backend for `*.tfstate` file. 
+- Traverse to `infra/prerequisites` dir. 
+- Run `terraform apply -auto-approve` 
+2. [Install and configure Kubernetes using Terraform](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-terraform?pivots=development-environment-azure-cli)
+- Traverse to `infra` dir.
+- Run `Terraform apply --auto-approve`
+3. Create & Deploy K8s Manifests for ecommerce webapp and datbase.
 - `kubectl apply -f k8s/ecom-db/mariadb-deployment.yaml`
 - `kubectl apply -f k8s/ecom-webapp/website-deployment.yaml`
-3. Check newly created pods
+4. Check newly created pods
 - `kubectl get pods`
+5. Access the ecommerce website by checking the external ip of the `web-service`
+- `kubectl get service`
