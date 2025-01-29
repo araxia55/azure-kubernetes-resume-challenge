@@ -46,3 +46,8 @@ spec:
               configMapKeyRef:
                 name: website-configmap
                 key: DB_NAME
+          - name: FEATURE_DARK_MODE  
+            valueFrom:
+              configMapKeyRef:
+                name: feature-toggle-config
+                key: FEATURE_DARK_MODE  
