@@ -17,7 +17,6 @@ data:
     ) AUTO_INCREMENT=1;
 
     -- Create ecomdb-user and grant privileges
-    CREATE USER 'root'@'%' IDENTIFIED BY 'drowssap4321';
     CREATE USER 'ecomdb-user'@'%' IDENTIFIED BY 'drowssap4321';
     GRANT ALL PRIVILEGES ON ecomdb.* TO 'ecomdb-user'@'%';
     FLUSH PRIVILEGES;

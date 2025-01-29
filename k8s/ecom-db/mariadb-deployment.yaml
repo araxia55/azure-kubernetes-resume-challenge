@@ -27,8 +27,8 @@ spec:
             cpu: "250m"
         volumeMounts:
           - name: mariadb-persistent-vol-storage
-            mountPath: /var/lib/mysql
+            mountPath: /docker-entrypoint-initdb.d/
       volumes:
-      - name: mariadb-persistent-vol-storage
-        persistentVolumeClaim:
-          claimName: mariadb-pvc
+      - name: mariadb-load-script
+        configMap:
+          name: mariadb-load-script
