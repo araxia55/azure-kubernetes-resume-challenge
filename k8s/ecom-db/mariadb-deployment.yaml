@@ -26,7 +26,7 @@ spec:
             memory: "256Mi"
             cpu: "250m"
         volumeMounts:
-          - name: mariadb-persistent-vol-storage
+          - name: mariadb-load-script
             mountPath: /docker-entrypoint-initdb.d/
       volumes:
       - name: mariadb-load-script
