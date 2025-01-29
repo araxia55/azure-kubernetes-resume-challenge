@@ -31,6 +31,11 @@
         <![endif]-->
     </head>
     <body>
+        <!-- Top Banner -->
+        <div class="banner">
+            <p>🎉 Special Offer! Free shipping on orders over $50</p>
+            <button class="banner-close">&times;</button>
+        </div>
         <!--==========Main Header==========-->
         <header class="main_header_area">
             <nav class="navbar navbar-default navbar-fixed-top" id="main_navbar">

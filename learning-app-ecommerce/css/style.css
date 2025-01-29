@@ -30,6 +30,7 @@ Table of Content:
 11/ Testimonial
 12/ Footer
 13/ Faq
+14/ Banner
 
 ========================================= */
 /* ----------------------------- */
@@ -1131,6 +1132,33 @@ ul {
   .apply_now_area .learn_mor {
     width: 180px;
   }
+}
+/* Banner
+============================================================================================ */
+.banner {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.banner p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.banner-close {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
 }
 /* ----------------------------- */
 
