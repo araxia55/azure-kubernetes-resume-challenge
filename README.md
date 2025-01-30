@@ -17,9 +17,10 @@ Prerequisites
 - Traverse to `infra` dir.
 - Run `Terraform apply --auto-approve`
 3. Create & Deploy the K8s Manifest file for ecommerce webapp and database.
-- `kubectl apply -f k8s/ecom-db/mariadb-deployment.yaml`
-- `kubectl apply -f k8s/ecom-webapp/website-deployment.yaml`
+- `kubectl apply -f k8s/ecom-db/`
+- `kubectl apply -f k8s/ecom-webapp/`
 4. Check newly created pods.
 - `kubectl get pods`
 5. Access the ecommerce website by checking the external ip of the `web-service`
 - `kubectl get service`
+6. Setup Apache Bench
