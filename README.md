@@ -2,19 +2,19 @@
 
 ## Introduction
 
-This is a high-level architecture of the Ecommerce Web Application deployed in Azure Kubernetes Service (AKS) by following a *build specification* specified in the [Kubernetes Resume Challenge - KRC](https://cloudresumechallenge.dev/docs/extensions/kubernetes-challenge/). 
+This is a high-level architecture of the Ecommerce Web Application deployed in **Azure Kubernetes Service** (AKS) by following a *build specification* specified in the [Kubernetes Resume Challenge - KRC](https://cloudresumechallenge.dev/docs/extensions/kubernetes-challenge/). 
 
 ### Mods
 
-- Terraform to automate the infrastructure deployment of Kubernetes Cluster.
-- Automate Infrastructure provisionioning Kubernetes Cluster with Terraform
+- Automate Infrastructure provisionioning of the Kubernetes Cluster with Terraform.
+- Include a website banner to test new deployment of the webapp.
 
 ### Future Mods
 
 - Introduce **Karpenter** to dynamically scale the Kubernetes cluster based on demand.
 - Leverage **Podman** to run a daemonless container engine and improve security because it runs a rootless container.
 
-![aks-ecomm](./assets/images/aks_ecom_webapp.png)
+![aks-ecomm-webapp](./assets/images/aks_cluster_westus1.png)
 
 ## Setup
 
@@ -23,9 +23,10 @@ This is a high-level architecture of the Ecommerce Web Application deployed in A
 1. Configure [az cli](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt).
 2. Install [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/).
 3. Install [Terraform](https://learn.microsoft.com/en-us/azure/developer/terraform/quickstart-configure).
-4. [Challenge prerequisites](https://cloudresumechallenge.dev/docs/extensions/kubernetes-challenge/#challenge-guide).
+4. Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/).
+5. Read the [Challenge prerequisites](https://cloudresumechallenge.dev/docs/extensions/kubernetes-challenge/#challenge-guide).
 
-## Getting Started
+## Quick Start Guide
 
 1. Setup Azure storage as the backend for `*.tfstate` file.
 
@@ -53,8 +54,8 @@ This is a high-level architecture of the Ecommerce Web Application deployed in A
     - `http://<external-ip>:<port>`
 
     ![E-commerce webapp](./assets/images/kk_ecom_webapp.png)
-    
-## Package the E-commerce webapp with Helm
+
+## Package the E-Commerce Webapp and MariadDB with Helm.
 
 ### Install Helm
 
@@ -81,7 +82,7 @@ This will create the correct `dir` structure for helm charts:
 
 In this case I've removed everything from the `templates/` dir and just moved all my manifests file here then converted them into helm templates and parameters for the ecom-webapp.
 
-3. Helm workflow - typical output that's expected if these templates are formed correctly.
+3. Helm *workflow* - A typical output that's expected if the templates are formed correctly.
 
 ```bash
 $ helm lint ecom-web-chart/
@@ -126,7 +127,49 @@ TEST SUITE: None
 
 ```
 
-4. Check the website after new changes are applied. So, in this instance a banner is deployed to notify users that there's a
+4. Check the website after new changes are applied. So, in this instance a *banner* is deployed to notify users that there's a
 **Special Offer**.
 
 ![E-commerce webapp-w-banner](./assets/images/kk_ecom_webapp_banner.png)
+
+5. Manually Test the autoscaling of applications this can be done via `kubectl` or `helm`.
+```bash
+
+$ kubectl scale deployment/ecomm-website-deployment --replicas=6
+
+deployment.apps/ecomm-website-deployment scaled
+
+$ kubectl get po
+
+NAME                                       READY   STATUS              RESTARTS   AGE
+ecomm-website-deployment-f5d7c58cb-dtj8c   1/1     Running             0          2m41s
+ecomm-website-deployment-f5d7c58cb-hggqn   1/1     Running             0          2m41s
+ecomm-website-deployment-f5d7c58cb-hhwjg   1/1     Running             0          2m41s
+ecomm-website-deployment-f5d7c58cb-jp5qd   1/1     Running             0          12h
+ecomm-website-deployment-f5d7c58cb-qxpt8   1/1     Running             0          2m41s
+ecomm-website-deployment-f5d7c58cb-xrw2k   1/1     Running             0          2m41s
+mariadb-deployment-796dcf5898-4lnn8        0/1     ContainerCreating   0          4s
+mariadb-deployment-796dcf5898-bj8f7        1/1     Running             0          4s
+mariadb-deployment-796dcf5898-h6zjc        1/1     Running             0          12h
+
+$ helm upgrade --set replicaCount=2 release-1 ecom-web-chart
+
+Release "release-1" has been upgraded. Happy Helming!
+NAME: release-1
+LAST DEPLOYED: Mon Feb  3 09:52:46 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+```
+
+6. Cleanup everything.
+
+```bash
+helm uninstall release-1 ecom-web-chart/
+release "release-1" uninstalled
+
+-- Then traverse to `infra/` dir.
+
+terraform destroy --auto-approve
+```
