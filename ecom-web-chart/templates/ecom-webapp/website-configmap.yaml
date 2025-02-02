@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.website.configMap.metadataName}}
+data:
+  dbHost: {{ .Values.website.configMap.dbHost | quote }}
+  dbPort: {{ .Values.website.configMap.dbPort | quote }}
+  dbName: {{ .Values.website.configMap.dbName | quote }}
+  dbUser: {{ .Values.website.configMap.dbUser | quote }}
+  featureDarkMode: {{ .Values.website.configMap.featureDarkMode | quote }}

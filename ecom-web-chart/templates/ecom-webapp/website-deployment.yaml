@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.name }}
+  name: {{ .Values.website.deploymentName }}
 spec:
   strategy:
-    type: {{ .Values.strategy.type }}
+    type: {{ .Values.website.type }}
     rollingUpdate:
-      maxSurge: {{ .Values.strategy.rollingUpdate.maxSurge }}
-      maxUnavailable: {{ .Values.strategy.rollingUpdate.maxUnavailable }}
-  replicas: {{ .Values.replicaCount }}
+      maxSurge: {{ .Values.website.maxSurge }}
+      maxUnavailable: {{ .Values.website.maxUnavailable}}
+  replicas: {{ .Values.website.replicaCount }}
   selector:
     matchLabels:
       app: ecomWebapp
@@ -18,60 +18,58 @@ spec:
         app: ecomWebapp  
     spec:
       containers:
-        - name: {{ .Values.containers.name}}
-          image: "{{ .Values.containers.image.repository }}:{{ .Values.containers.image.tag }}"
-          imagePullPolicy: {{ .Values.containers.image.pullPolicy }}
+        - name: {{ .Values.website.containerName }}
+          image: "{{ .Values.website.repository }}:{{ .Values.website.tag }}"
+          imagePullPolicy: {{ .Values.website.pullPolicy }}
           resources:
             limits:
-              memory: {{ .Values.containers.image.resources.limits.memory }}
-              cpu: {{ .Values.containers.image.resources.limits.cpu}}
+              memory: {{ .Values.website.limits.memory }}
+              cpu: {{ .Values.website.limits.cpu}}
             requests:
-              memory: {{ .Values.containers.image.resources.requests.memory }}
-              cpu: {{ .Values.containers.image.resources.requests.cpu }}
+              memory: {{ .Values.website.requests.memory}}
+              cpu: {{ .Values.website.requests.cpu }}
           ports:
-            - containerPort: {{ .Values.containers.image.ports.containerPort }}
+            - containerPort: {{ .Values.website.containerPort }}
           livenessProbe:
-            tcpSocket:
-              port: {{ .Values.containers.image.livenessProbe.httpGet.port }}
             httpGet:
-              path: {{ .Values.containers.image.livenessProbe.httpGet.path }}
-              port: {{ .Values.containers.image.livenessProbe.httpGet.port }}
-            initialDelaySeconds: {{ .Values.containers.image.livenessProbe.initialDelaySeconds}}
-            periodSeconds: {{ .Values.containers.image.periodSeconds }}
-            timeoutSeconds: {{ .Values.containers.image.timeoutSeconds }}
-            failureThreshold: {{ .Values.containers.image.failureThreshold }}
+              path: {{ .Values.website.livenessProbe.path }}
+              port: {{ .Values.website.livenessProbe.port }}
+            initialDelaySeconds: {{ .Values.website.livenessProbe.initialDelaySeconds}}
+            periodSeconds: {{ .Values.website.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.website.livenessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.website.livenessProbe.failureThreshold }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.containers.image.readinessProbe.httpGet.path }}
-              port: {{ .Values.containers.image.readinessProbe.httpGet.port }}
-            initialDelaySeconds: {{ .Values.containers.image.initialDelaySeconds }}
-            periodSeconds: {{ .Values.containers.image.periodSeconds }}
-            timeoutSeconds: {{ .Values.containers.image.timeoutSeconds }}
-            successThreshold: {{ .Values.containers.image.successThreshold }}
-            failureThreshold: {{ .Values.containers.image.failureThreshold }}
+              path: {{ .Values.website.readinessProbe.path }}
+              port: {{ .Values.website.readinessProbe.port }}
+            initialDelaySeconds: {{ .Values.website.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.website.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.website.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.website.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.website.readinessProbe.failureThreshold }}
           env:
-          - name: DB_HOST
+          - name: dbHost
             valueFrom:
               configMapKeyRef:
-                name: {{ .Values.configmap.metadata.name }}
-                key: {{ .Values.configmap.websiteConfigmap.data.DB_HOST}}
-          - name: DB_USER
+                name: {{ .Values.website.configMap.metadataName }}
+                key: "dbHost"
+          - name: dbUser
             valueFrom:
               configMapKeyRef:
-                name: {{ .Values.configmap.metadata.name }}
-                key: {{ .Values.configmap.websiteConfigmap.data.DB_USER}}
-          - name: DB_PASSWORD
+                name: {{ .Values.website.configMap.metadataName }}
+                key: "dbUser"
+          - name: dbPassword
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.secret.dbSecrets.metadata.name }}
-                key: {{ .Values.secret.dbSecrets.DB_PASSWORD }}
-          - name: DB_NAME
+                name: {{ .Values.website.secret.dbSecrets.name }}
+                key: "dbPassword"
+          - name: dbName
             valueFrom:
               configMapKeyRef:
-                name: {{ .Values.configmap.metadata.name }}
-                key: {{ .Values.configmap.websiteConfigmap.data.DB_NAME }}
-          - name: FEATURE_DARK_MODE
+                name: {{ .Values.website.configMap.metadataName }}
+                key: "dbName"
+          - name: featureDarkMode
             valueFrom:
               configMapKeyRef:
-                name: {{ .Values.configmap.featureToggleConfig.metadata.name }}
-                key: {{ .Values.configmap.featureToggleConfig.data.FEATURE_DARK_MODE}}  
+                name: {{ .Values.website.configMap.metadataName }}
+                key: "featureDarkMode"

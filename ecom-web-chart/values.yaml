@@ -1,88 +1,110 @@
-# Default values for ecom-web-chart.
-# Deployment values
-name: ecomm-website-deployment
-strategy:
+##########################################
+## Website values #######################
+##########################################
+website:
+  deploymentName: ecomm-website-deployment
   type: RollingUpdate
-  rollingUpdate:
-    maxUnavailable: 0
-    maxSurge: 1
-replicaCount: 1
+  maxUnavailable: 0
+  maxSurge: 1
+  replicaCount: 1
 # Container spec values
-containers:
-  name: ecomWebAppContainer
-  image:
-    repository: rm05/ecom-web
-    pullPolicy: Always
-    tag: v2
-    resources:
-      limits:
-        cpu: "75m"
-        memory: "120Mi"
-      requests:
-        cpu: "1m"
-        memory: "50Mi"
-    ports:
-      containerPort: 80
-    livenessProbe:
-      httpGet:
-        path: /
-        port: 80
-    readinessProbe:
-      httpGet:
-        path: /
-        port: 80
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    timeoutSeconds: 2
-    successThreshold: 1
-    failureThreshold: 5
-
+  containerName: ecomweb-app-container
+  repository: rm05/ecom-web
+  pullPolicy: Always
+  tag: v3
+  limits:
+    cpu: "75m"
+    memory: "120Mi"
+  requests:
+    cpu: "1m"
+    memory: "50Mi"
+  containerPort: 80
+  livenessProbe:
+      path: /
+      port: 80
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 5
+  readinessProbe:
+      path: /
+      port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 2
+      successThreshold: 1
+      failureThreshold: 5
 # Configmap and secret values  
-configmap:
-  metadata:
-    name: website-configmap
-  websiteConfigmap:
-    data:
-      DB_HOST: mariadbService
-      DB_PORT: '3306'
-      DB_NAME: ecomdb
-      DB_USER: ecomdbUser
-  featureToggleConfig:
-    metadata:
-      name: featureToggleConfig
-    data:
-      FEATURE_DARK_MODE: "true"
-secret:
-  dbSecrets:
-    metadata:
-      name: dbSecrets
-    DB_PASSWORD: ZHJvd3NzYXA0MzIx
+  configMap:
+    metadataName: "website-configmap"
+    dbHost: "mariadb-service"
+    dbPort: "3306"
+    dbName: "ecomdb"
+    dbUser: "ecomdb-user"
+    featureDarkMode: "true"
 
-# Autoscaling values
-horizontalPodAutoscaler:
-  metadata:
-    name: website-hpa
+  secret:
+    dbSecrets:
+      name: "dbsecrets"
+      dbPassword: "ZHJvd3NzYXA0MzIx"
+      username: "ZWNvbS11c2Vy"
+
+  # Autoscaling values
+  horizontalPodAutoscaler:
+    metadataName: website-hpa
     namespace: default
-  spec:
     name: ecommWebsiteDeployment
     enabled: true
     minReplicas: 2
     maxReplicas: 10
-    metrics:
-      resource:
-          target:
-            type: Utilization
-            averageUtilization: 50
+    type: Utilization
+    averageUtilization: 50
 
-# Service values to expose the ecom website
-service:
-  metadata:
-    name: web-service
-    labels:
-      run: webService
-  type: LoadBalancer
-  port: 80
-  protocol: TCP
-  targetPort: 80
-  selector:
+  # Service values to expose the ecom website
+  service:
+    metadataName: web-service
+    run: webService
+    type: LoadBalancer
+    port: 80
+    protocol: TCP
+    targetPort: 80
     app: ecomWebapp
+
+##########################################
+## Database values #######################
+##########################################
+database:
+  deploymentName: mariadb-deployment
+  replicas: 1
+  type: RollingUpdate
+  maxsurge: 1
+  maxunavailable: 0
+  image: rm05/ecom-db:v1
+  containername: mariadb 
+  imagepullpolicy: Always
+  containerport: 3306
+  
+  mariaDbSecrets:
+    name: mariadb-secrets
+    password: "ZHJvd3NzYXA0MzIx"
+
+  configMap:
+    name: mariadb-load-script
+    data:
+      dbName: ecomdb
+
+  service: 
+    name: mariadb-service
+    port: 3306
+    targetPort: 3306
+    protocol: TCP
+
+  storage:
+    persistentVolumeName: mariadb-pv
+    persistentVolumeClaimName: mariadb-pvc
+    storageClassName: manual
+    size: 1Gi
+    accessModes: ReadWriteOnce
+    persistentVolumeReclaimPolicy: Retain
+    hostPath: "/docker-entrypoint-initdb.d/"
+    volumeMode: Filesystem

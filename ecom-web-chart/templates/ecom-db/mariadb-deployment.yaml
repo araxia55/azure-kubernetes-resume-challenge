@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.database.deploymentName }}
+spec:
+  strategy:
+    type: {{ .Values.database.type }}
+    rollingUpdate:
+      maxSurge: {{ .Values.database.maxsurge }}
+      maxUnavailable: {{ .Values.database.maxunavailable }}
+  replicas: {{ .Values.database.replicas }}
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: {{ .Values.database.containername }}
+        image: {{ .Values.database.image }}
+        imagePullPolicy: {{ .Values.database.imagepullpolicy }}
+        ports:
+        - containerPort: {{ .Values.database.containerport }}
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+        volumeMounts:
+          - name: mariadb-load-script
+            mountPath: "/docker-entrypoint-initdb.d"
+      volumes:
+      - name: mariadb-load-script
+        configMap:
+          name: {{ .Values.database.configMap.name }}
+          

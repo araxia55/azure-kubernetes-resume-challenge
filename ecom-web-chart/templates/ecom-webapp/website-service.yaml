@@ -1,14 +1,14 @@
- apiVersion: v1
+apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.service.metadata.name }}
+  name: {{ .Values.website.service.metadataName }}
   labels:
-    run: {{ .Values.service.metadata.labels.run }}
+    run: {{ .Values.website.service.run }}
 spec:
   selector:
-    app: {{ .Values.service.selector.app }}
+    app: {{ .Values.website.service.app }}
   ports:
-    - protocol: {{ .Values.service.protocol}}
-      port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}
-  type: {{ .Values.service.type}}
+    - protocol: {{ .Values.website.service.protocol }}
+      port: {{ .Values.website.service.port }}
+      targetPort: {{ .Values.website.service.targetPort }}
+  type: {{ .Values.website.service.type }}
