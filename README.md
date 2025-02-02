@@ -136,8 +136,10 @@ TEST SUITE: None
 ```bash
 
 $ kubectl scale deployment/ecomm-website-deployment --replicas=6
-
 deployment.apps/ecomm-website-deployment scaled
+
+$ kubectl scale deployment/mariadb-deployment --replicas=3
+deployment.apps/mariadb-deployment scaled
 
 $ kubectl get po
 
