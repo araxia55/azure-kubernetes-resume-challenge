@@ -76,7 +76,7 @@ jobs:
     
           - name: Deploy to Kubernetes 
             run: |
-              helm upgrade --install ecom-web ./chart \
+              helm upgrade --install ecom-web ./ecom-web-chart/ \
                 --set image.repository=${{ secrets.DOCKER_USERNAME }}/ecom-web \
                 --set image.tag=latest
     
