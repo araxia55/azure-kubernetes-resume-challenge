@@ -48,6 +48,10 @@ jobs:
         runs-on: ubuntu-latest
         needs: ecom_build_docker_images
 
+        permissions:
+          id-token: write
+          contents: read
+
         steps:
           - name: Checkout code ✅
             uses: actions/checkout@v3
