@@ -34,20 +34,27 @@ jobs:
               password: ${{ secrets.DOCKER_PAT }}
     
           - name: Build and push Docker image for webapp 🐳
-            uses: docker/build-push-action@v2
-            with:
-              context: .
-              file: ./learning-app-ecommerce/Dockerfile.app  # spcific for ecom-webapp
-              push: true
-              tags: ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest
+            # uses: docker/build-push-action@v2
+            # with:
+            #   context: .
+            #   file: ./learning-app-ecommerce/Dockerfile.app  # specific for ecom-webapp
+            #   push: true
+            #   tags: ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest
+            run: | 
+              docker build -t ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest -f ./learning-app-ecommerce/Dockerfile.app .
+              docker push ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest
+              
 
           - name: Build and push Docker image for mariadb 🐳
-            uses: docker/build-push-action@v2
-            with:
-             context: .
-             file: ./learning-app-ecommerce/Dockerfile.db  # spcific for mariadb 
-             push: true
-             tags: ${{ secrets.DOCKER_USERNAME }}/ecom-db:latest
+            # uses: docker/build-push-action@v2
+            # with:
+            #  context: .
+            #  file: ./learning-app-ecommerce/Dockerfile.db  # specific for mariadb 
+            #  push: true
+            #tags: ${{ secrets.DOCKER_USERNAME }}/ecom-db:latest
+            run: | 
+              docker build -t ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest -f ./learning-app-ecommerce/Dockerfile.app .
+              docker push ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest
 
     ecom_webapp_deploy:
         runs-on: ubuntu-latest
