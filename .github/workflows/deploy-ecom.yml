@@ -34,24 +34,12 @@ jobs:
               password: ${{ secrets.DOCKER_PAT }}
     
           - name: Build and push Docker image for webapp 🐳
-            # uses: docker/build-push-action@v2
-            # with:
-            #   context: .
-            #   file: ./learning-app-ecommerce/Dockerfile.app  # specific for ecom-webapp
-            #   push: true
-            #   tags: ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest
             run: | 
               docker build -t ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest -f ./Dockerfile.app .
               docker push ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest
               
 
           - name: Build and push Docker image for mariadb 🐳
-            # uses: docker/build-push-action@v2
-            # with:
-            #  context: .
-            #  file: ./learning-app-ecommerce/Dockerfile.db  # specific for mariadb 
-            #  push: true
-            #tags: ${{ secrets.DOCKER_USERNAME }}/ecom-db:latest
             run: | 
               docker build -t ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest -f ./Dockerfile.db .
               docker push ${{ secrets.DOCKER_USERNAME }}/ecom-web:latest
@@ -72,7 +60,9 @@ jobs:
           - name: Authenticate with Azure
             uses: azure/login@v1
             with:
-              creds: ${{ secrets.AZURE_CREDENTIALS }}
+              client-id: ${{ secrets.AZURE_CLIENT_ID }}
+              tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+              subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
           - name: Set up AKS context
             run: |
