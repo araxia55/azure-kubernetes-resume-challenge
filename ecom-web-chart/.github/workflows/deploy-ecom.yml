@@ -5,7 +5,12 @@ run-name: ${{ github.actor }} has pushed changes to ${{ github.event.ref }}
 on:
     push:
         branches:
-            - 'release/ecom/*'
+            - main
+
+    pull_request: 
+      branches:
+      - 'release/ecom/*'
+      types: [opened,reopened,synchronize]
 
 jobs:
     ecom_build_docker_images:
