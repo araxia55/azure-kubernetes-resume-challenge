@@ -165,13 +165,17 @@ REVISION: 2
 TEST SUITE: None
 ```
 
-6. Cleanup everything.
+## Create a CI/CD pipeline to automate the deployment process.
+
+
+
+## Cleanup everything.
 
 ```bash
 helm uninstall release-1 ecom-web-chart/
 release "release-1" uninstalled
-
--- Then traverse to `infra/` dir.
-
-terraform destroy --auto-approve
 ```
+
+Then traverse to `infra/` dir.
+
+`$ terraform destroy --auto-approve`
