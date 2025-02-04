@@ -61,7 +61,7 @@ jobs:
             with:
               version: 'latest'
 
-          - name: Authenticate with Azure
+          - name: Authenticate with Azure 🔏
             uses: azure/login@v1
             with:
               client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -69,7 +69,7 @@ jobs:
               subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
               allow-no-subscriptions: true
 
-          - name: Set up AKS context
+          - name: Set up AKS context 🔧
             run: |
               az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
     
@@ -77,8 +77,12 @@ jobs:
             uses: azure/setup-helm@v1
             with:
               version: 'latest'
+
+          - name: Create namespace if not exists
+            run: |
+              kubectl create namespace ecom-deploy || true
     
-          - name: Deploy to Kubernetes 
+          - name: Deploy to Kubernetes cluster 🚀
             run: |
                 helm upgrade --install ecom-release1 ./ecom-web-chart/ \
                 --namespace ecom-deploy \
