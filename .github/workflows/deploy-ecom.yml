@@ -82,6 +82,7 @@ jobs:
             run: |
               kubectl create namespace ecom-deploy || true
               helm list --all-namespaces -a
+              kubectl get ns
     
           - name: Deploy to Kubernetes cluster 🚀
             run: |
