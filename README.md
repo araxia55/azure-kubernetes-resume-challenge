@@ -166,10 +166,11 @@ TEST SUITE: None
 ```
 
 ## Create a CI/CD pipeline to automate the deployment process.
-- This pipeline will automatically update when.
+- This pipeline will automatically trigger when:
   - An updated image is pushed in Docker hub.
-  - New feature is released for the Ecommerce website.
-Create GHA Workflow similar [here](https://github.com/araxia55/azure-kubernetes-resume-challenge/blob/36d8c45890b220e5c7a6f03e9b4d1d54c0f8562f/.github/workflows/deploy-ecom.yml).
+  - A New feature is released for the Ecommerce website.
+
+- Create a GHA workflow similar [here](https://github.com/araxia55/azure-kubernetes-resume-challenge/blob/36d8c45890b220e5c7a6f03e9b4d1d54c0f8562f/.github/workflows/deploy-ecom.yml).
 
 Sample pipeline:
 ![gha-workflow](./assets/images/gha-workflow.png)
