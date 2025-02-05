@@ -86,6 +86,8 @@ jobs:
     
           - name: Deploy to Kubernetes cluster 🚀
             run: |
+                helm plugin install https://github.com/helm/helm-mapkubeapis &&
+                helm mapkubeapis ecom-release1 --namespace ecom-deploy &&
                 helm upgrade --install ecom-release1 ./ecom-web-chart/ \
                 --namespace  ecom-deploy
     
