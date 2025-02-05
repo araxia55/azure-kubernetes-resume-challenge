@@ -90,7 +90,6 @@ jobs:
                 --namespace default \
                 --set image.repository=${{ secrets.DOCKER_USERNAME }}/ecom-web \
                 --set image.tag=latest
-                --force
     
     akrc_codeql_scan:
         runs-on: ubuntu-latest
