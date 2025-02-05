@@ -47,7 +47,7 @@ website:
     dbSecrets:
       name: "dbsecrets"
       dbPassword: "ZHJvd3NzYXA0MzIx"
-      username: "ZWNvbS11c2Vy"
+      username: "ZWNvbWRiLXVzZXIK"
 
   # Autoscaling values
   horizontalPodAutoscaler:
@@ -87,7 +87,7 @@ database:
   mariaDbSecrets:
     name: mariadb-secrets
     password: "ZHJvd3NzYXA0MzIx"
-    username:: "ZWNvbS11c2Vy"
+    username:: "ZWNvbWRiLXVzZXIK"
 
   configMap:
     name: mariadb-load-script
