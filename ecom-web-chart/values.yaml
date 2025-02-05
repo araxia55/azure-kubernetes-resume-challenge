@@ -87,6 +87,7 @@ database:
   mariaDbSecrets:
     name: mariadb-secrets
     password: "ZHJvd3NzYXA0MzIx"
+    username:: "ZWNvbS11c2Vy"
 
   configMap:
     name: mariadb-load-script
