@@ -87,9 +87,7 @@ jobs:
           - name: Deploy to Kubernetes cluster 🚀
             run: |
                 helm upgrade --install ecom-release1 ./ecom-web-chart/ \
-                --namespace default \
-                --set image.repository=${{ secrets.DOCKER_USERNAME }}/ecom-web \
-                --set image.tag=latest
+                --namespace  ecom-deploy
     
     akrc_codeql_scan:
         runs-on: ubuntu-latest
