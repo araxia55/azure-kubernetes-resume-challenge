@@ -13,6 +13,7 @@ This is a high-level architecture of the Ecommerce Web Application deployed in *
 
 - Introduce **Karpenter** to dynamically scale the Kubernetes cluster based on demand.
 - Leverage **Podman** to run a daemonless container engine and improve security because it runs a rootless container.
+- Utilise Gitops to automate the deployment of Kubernetes resources.
 
 ![aks-ecomm-webapp](./assets/images/aks_cluster_westus1.png)
 
