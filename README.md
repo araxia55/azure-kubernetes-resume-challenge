@@ -1,21 +1,24 @@
 # Azure Kubernetes Resume Challenge
 
+![aks-ecomm-webapp](./assets/images/aks_cluster_westus1.png)
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Setup](#setup)
+  - [Prerequisites](#prerequisites)
+- [Quick Start Guide](#quick-start-guide)
+  - [Package the E-Commerce Webapp and MariadDB with Helm](#package-the-e-commerce-webapp-and-mariaddb-with-helm)
+  - [Install Helm](#install-helm)
+  - [Create a CI/CD pipeline to automate the deployment process](#create-a-cicd-pipeline-to-automate-the-deployment-process)
+  - [Create an Automatic Code Scan and upload the results in Github for remediation](#create-an-automatic-code-scan-and-upload-the-results-in-github-for-remediation)
+- [Cleanup](#cleanup-everything)
+- [Mods](#mods)
+- [Future Mods](#future-mods)
+
 ## Introduction
 
 This is a high-level architecture of the Ecommerce Web Application deployed in **Azure Kubernetes Service** (AKS) by following a *build specification* specified in the [Kubernetes Resume Challenge - KRC](https://cloudresumechallenge.dev/docs/extensions/kubernetes-challenge/). 
-
-### Mods
-
-- Automate Infrastructure provisionioning of the Kubernetes Cluster with Terraform.
-- Include a website banner to test new deployment of the webapp.
-
-### Future Mods
-
-- Introduce **Karpenter** to dynamically scale the Kubernetes cluster based on demand.
-- Leverage **Podman** to run a daemonless container engine and improve security because it runs a rootless container.
-- Utilise Gitops to automate the deployment of Kubernetes resources.
-
-![aks-ecomm-webapp](./assets/images/aks_cluster_westus1.png)
 
 ## Setup
 
@@ -180,6 +183,17 @@ Sample pipeline:
 - Included [**Codeql**](https://github.com/github/codeql-action/tree/v3) to automatically scan the repo for vulnerabilities.
 
 ![codeql-scan01](./assets/images/codeql-scan01.png)
+
+### Mods
+
+- Automate Infrastructure provisionioning of the Kubernetes Cluster with Terraform.
+- Include a website banner to test new deployment of the webapp.
+
+### Future Mods
+
+- Introduce **Karpenter** to dynamically scale the Kubernetes cluster based on demand.
+- Leverage **Podman** to run a daemonless container engine and improve security because it runs a rootless container.
+- Utilise Gitops to automate the deployment of Kubernetes resources.
 
 ## Cleanup everything.
 
